@@ -20,7 +20,7 @@ const ToppingPart = styled.div`
 const OrderList = (
   {
     chosenSize,
-    chosenToppings,
+    chosenToppings
   }
 ) => (
   <SectionLayout
@@ -43,7 +43,7 @@ const OrderList = (
 
 OrderList.propTypes = {
   chosenSize: PropTypes.object.isRequired,
-  chosenToppings: PropTypes.array.isRequired,
+  chosenToppings: PropTypes.array.isRequired
 };
 
 export default OrderList;
