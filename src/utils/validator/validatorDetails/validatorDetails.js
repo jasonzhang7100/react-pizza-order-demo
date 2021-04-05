@@ -1,6 +1,6 @@
 import { isNotEmpty, isEmail, isIdentical, isPostcode, isMobile } from '../validator';
 
-export const VALIDATORS = {
+export const validatorDetails = {
   name: [
     {
       method: isNotEmpty,
@@ -60,16 +60,14 @@ export const VALIDATORS = {
   ]
 };
 
-export default (details) => {
+const validateAllDetails = details => {
   let result = true;
 
-  Object.keys(VALIDATORS).forEach(key => {
-    let validator = VALIDATORS[key];
-
+  Object.keys(validatorDetails).forEach(key => {
+    let validator = validatorDetails[key];
     if (key === 'confirmEmail') {
       validator = validator(details.email);
     };
-
     validator.forEach(({ method }) => {
       if (method(details[key])) {
         return;
@@ -80,3 +78,5 @@ export default (details) => {
 
   return result;
 };
+
+export default validateAllDetails;

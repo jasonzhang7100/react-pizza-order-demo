@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import SectionLayout from '../SectionLayout';
 import Input from './Input';
-import { VALIDATORS } from '../../utils/validator/validatorDetails';
+import { validatorDetails } from '../../utils/validator/validatorDetails';
 
 const Layout = styled.div`
   display: flex;
@@ -27,37 +27,36 @@ class EnterYourDetails extends React.Component {
 
   render() {
     const { formDirty, details, handleDetailChange } = this.props;
-
     const formField = {
       name: {
         label: 'NAME',
         required: true,
-        validator: VALIDATORS.name
+        validator: validatorDetails.name
       },
       email: {
         label: 'EMAIL',
         required: true,
-        validator: VALIDATORS.email
+        validator: validatorDetails.email
       },
       confirmEmail: {
         label: 'CONFIRM EMAIL',
         required: true,
-        validator: VALIDATORS.confirmEmail(details.email)
+        validator: validatorDetails.confirmEmail(details.email)
       },
       address: {
         label: 'ADDRESS',
         required: true,
-        validator: VALIDATORS.address
+        validator: validatorDetails.address
       },
       postcode: {
         label: 'POSTCODE',
         required: true,
-        validator: VALIDATORS.postcode
+        validator: validatorDetails.postcode
       },
       mobile: {
         label: 'MOBILE',
         required: true,
-        validator: VALIDATORS.mobile
+        validator: validatorDetails.mobile
       }
     };
 
@@ -68,17 +67,13 @@ class EnterYourDetails extends React.Component {
         <Layout>
           {
             Object.keys(formField).map(key => {
-
-              const item = formField[key];
-
+              const detailItem = formField[key];
               return (
                 <Item key={key}>
                   <Input
                     formDirty={formDirty}
-                    label={item.label}
-                    required={item.required}
+                    detailItem={detailItem}
                     value={details[key] || ''}
-                    validator={item.validator}
                     handleDetailChange={value => handleDetailChange(key, value)}
                   />
                 </Item>

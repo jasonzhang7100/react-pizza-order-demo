@@ -31,4 +31,3 @@ SectionLayout.propTypes = {
 };
 
 export default SectionLayout;
-

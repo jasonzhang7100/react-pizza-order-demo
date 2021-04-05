@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 const Layout = styled.div`
 `;
 
+const LabelWithError = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Label = styled.div`
   height: 30px;
   font-size: 12px;
@@ -16,9 +21,12 @@ const Required = styled.span`
   color: red;
 `;
 
-const Error = styled.span`
-  margin-left: 30px;  
+const Error = styled.div`
+  height: 30px;
+  font-size: 8px;
+  font-weight: 300; 
   color: red;
+  line-height: 36px;
 `;
 
 const StyledInput = styled.input`
@@ -27,7 +35,9 @@ const StyledInput = styled.input`
   outline: 0;
 `;
 
-const Input = ({ formDirty, label, required, value, validator, handleDetailChange }) => {
+const Input = ({ formDirty, detailItem, value, handleDetailChange }) => {
+
+  const { label, required, validator } = detailItem;
 
   const errorMessage = validator.reduce((preData, currentData) => {
     const { method, message } = currentData;
@@ -37,17 +47,20 @@ const Input = ({ formDirty, label, required, value, validator, handleDetailChang
     return message;
   }, '');
 
-  const onChange = (event) => {
+  const onChange = event => {
     handleDetailChange(event.target.value);
   };
 
   return (
     <Layout>
-      <Label>
-        {label}
-        {required && (<Required>*</Required>)}
+      <LabelWithError>
+        <Label>
+          {label}
+          {required && (<Required>*</Required>)}
+        </Label>
         {(errorMessage && formDirty) && (<Error>{errorMessage}</Error>)}
-      </Label>
+      </LabelWithError>
+
       <StyledInput
         value={value}
         onChange={onChange}
@@ -57,12 +70,9 @@ const Input = ({ formDirty, label, required, value, validator, handleDetailChang
 };
 
 Input.propTypes = {
-  label: PropTypes.string.isRequired,
-  required: PropTypes.bool.isRequired,
-  validator: PropTypes.array.isRequired,
+  formDirty: PropTypes.bool.isRequired,
+  detailItem: PropTypes.object,
   handleDetailChange: PropTypes.func.isRequired,
 }
 
 export default Input;
-
-
