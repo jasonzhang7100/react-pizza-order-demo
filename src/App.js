@@ -129,6 +129,7 @@ class App extends Component {
           handleDetailChange={this.handleDetailChange}
         />
         <SelectYourPizza
+          formDirty={formDirty}
           sizes={sizes}
           chosenSize={chosenSize}
           handleSizeChoose={this.handleSizeChoose}
@@ -144,10 +145,10 @@ class App extends Component {
           onClick={() => {
             this.setState({ formDirty: true });
             const detailsValidResult = validateAllDetails(details);
-            if (!detailsValidResult) {
+            if (!detailsValidResult || chosenToppings.length === 0) {
               return;
             }
-            alert('ORDER SENT');
+            alert('PLACE ORDER');
           }}
         >
           Submit Your Order

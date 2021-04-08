@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import bacon from '../../../assets/bacon.svg';
 import egg from '../../../assets/egg.svg';
@@ -23,7 +24,7 @@ const toppingImages = {
 const Layout = styled.div`
   display: flex;
   align-items: center;
-  border: 2px solid ${({ selected }) => selected ? '#1a98e1' : 'transparent'}; 
+  border: 2px solid ${({ selected }) => selected ? '#98C550' : 'transparent'}; 
   background-color: #fff;
   cursor: pointer;
 `;
@@ -39,16 +40,20 @@ const Name = styled.div`
   text-align: center;
 `;
 
-const Topping = ({ toppingItem, selected, handleToppingsChoose }) => {
-
-  const { name } = toppingItem;
+const Topping = ({ name, selected, handleToppingsChoose }) => {
 
   return (
-    <Layout selected={selected} onClick={() => handleToppingsChoose(toppingItem)}>
+    <Layout data-test="toppingLayout" selected={selected} onClick={handleToppingsChoose}>
       <ToppingPic src={toppingImages[name]} />
-      <Name>{name}</Name>
+      <Name data-test="toppingName">{name}</Name>
     </Layout>
   );
+};
+
+Topping.propTypes = {
+  name: PropTypes.string.isRequired,
+  selected: PropTypes.bool.isRequired,
+  handleToppingsChoose: PropTypes.func.isRequired
 };
 
 export default Topping;
