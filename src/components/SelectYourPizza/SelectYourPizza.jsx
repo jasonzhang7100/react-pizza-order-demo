@@ -4,15 +4,22 @@ import PropTypes from 'prop-types';
 import SectionLayout from '../SectionLayout';
 import Size from './components/Size';
 import Topping from './components/Topping';
+import sizePropTypes from '../../propTypes/Size';
+import toppingPropTypes from '../../propTypes/Topping';
+import ErrorMsg from '../ErrorMsg';
 
 const SubSection = styled.div`
   margin-bottom: 20px;
 `;
 
 const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 15px;
+  height: 20px;
   font-size: 16px;
   color: #6E7790;
+  line-height: 20px;
 `;
 
 const Layout = styled.div`
@@ -32,6 +39,7 @@ const ToppingItem = styled.div`
 `;
 
 const SelectYourPizza = ({
+  formDirty,
   sizes,
   chosenSize,
   handleSizeChoose,
@@ -50,38 +58,50 @@ const SelectYourPizza = ({
           {sizes.map(sizeItem => (
             <SizeItem key={sizeItem.name}>
               <Size
-                sizeItem={sizeItem}
+                name={sizeItem.name}
+                percentage={sizeItem.percentage}
                 selected={chosenSize === sizeItem}
-                handleSizeChoose={handleSizeChoose}
+                handleSizeChoose={() => handleSizeChoose(sizeItem)}
               />
             </SizeItem>
           ))}
         </Layout>
       </SubSection>
       <SubSection>
-        <Title>Select the toppings</Title>
+        <Title>
+          Select the toppings
+          {(formDirty && chosenToppings.length === 0) && (
+            <ErrorMsg>
+              Please select at least one topping
+            </ErrorMsg>
+          )}
+        </Title>
+
         <Layout>
           {toppings.map(toppingItem => (
             <ToppingItem key={toppingItem.name}>
               <Topping
-                toppingItem={toppingItem}
-                chosenToppings={chosenToppings}
+                name={toppingItem.name}
                 selected={chosenToppings.includes(toppingItem)}
-                handleToppingsChoose={handleToppingsChoose}
+                handleToppingsChoose={() => handleToppingsChoose(toppingItem)}
               />
             </ToppingItem>
           ))}
 
         </Layout>
       </SubSection>
-    </SectionLayout>
+    </SectionLayout >
   );
 };
 
 SelectYourPizza.propTypes = {
-  sizes: PropTypes.array.isRequired,
-  chosenSize: PropTypes.object.isRequired,
-  handleSizeChoose: PropTypes.func.isRequired
+  formDirty: PropTypes.bool.isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.shape(sizePropTypes)).isRequired,
+  chosenSize: PropTypes.shape(sizePropTypes).isRequired,
+  handleSizeChoose: PropTypes.func.isRequired,
+  toppings: PropTypes.arrayOf(PropTypes.shape(toppingPropTypes)).isRequired,
+  chosenToppings: PropTypes.arrayOf(PropTypes.shape(toppingPropTypes)).isRequired,
+  handleToppingsChoose: PropTypes.func.isRequired
 };
 
 export default SelectYourPizza;

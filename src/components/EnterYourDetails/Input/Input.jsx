@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Layout = styled.div`
-`;
+import ErrorMsg from '../../ErrorMsg';
 
 const LabelWithError = styled.div`
   display: flex;
@@ -19,14 +18,6 @@ const Label = styled.div`
 const Required = styled.span`
   margin-left: 5px;  
   color: red;
-`;
-
-const Error = styled.div`
-  height: 30px;
-  font-size: 8px;
-  font-weight: 300; 
-  color: red;
-  line-height: 36px;
 `;
 
 const StyledInput = styled.input`
@@ -52,20 +43,20 @@ const Input = ({ formDirty, detailItem, value, handleDetailChange }) => {
   };
 
   return (
-    <Layout>
+    <>
       <LabelWithError>
         <Label>
           {label}
           {required && (<Required>*</Required>)}
         </Label>
-        {(errorMessage && formDirty) && (<Error>{errorMessage}</Error>)}
+        {(errorMessage && formDirty) && (<ErrorMsg>{errorMessage}</ErrorMsg>)}
       </LabelWithError>
 
       <StyledInput
         value={value}
         onChange={onChange}
       />
-    </Layout>
+    </>
   );
 };
 

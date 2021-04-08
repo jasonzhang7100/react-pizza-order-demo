@@ -1,7 +1,3 @@
-// 检测能否成功把details作为props传给EYD
-// 检测能否调EYD的props上的函数——改变了主wrapper的details——再在EYD的props看到这个details
-
-import React from 'react';
 import { shallow } from 'enzyme';
 
 import App from './App';
@@ -27,5 +23,4 @@ describe('<App />', () => {
       name: 'Jack'
     });
   });
-
 });
